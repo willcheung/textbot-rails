@@ -1,6 +1,8 @@
-# README
+# Textbot for managing to-do lists
 
 This is a simple textbot to help anyone manage a simple list, such as to-do, grocery, reminders, etc. The bot has two components: API/backend to manage requests, and [Twilio Studio Flow](https://www.twilio.com/docs/studio) to manage the user workflow.
+
+![textbot-screenshot](https://res.cloudinary.com/practicaldev/image/fetch/s--rW-Nf-Dk--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/i/9nstfu9ci1c9701fke9k.png)
 
 ## Prerequisite
 * Ruby 2.6.5
@@ -13,18 +15,32 @@ This is a simple textbot to help anyone manage a simple list, such as to-do, gro
 * twilio-ruby
 * annotate (for annotating database schema on model files)
 
-## Setting up locally
+## Setting up Rails app locally
 * Fill in `config/database.yml`
 * Do the usual `rails db:migrate` and `rails s` to get localhost running
-* You can test the API endpoints (without Twilio Studio Flow) via [Postman](https://www.postman.com/). Details are in each controller.
+* You can test the API endpoints (without Twilio Studio Flow) via [Postman](https://www.postman.com/). The endpoints are:
+
+```
+GET  /api/users/retrieve/:phone
+POST /api/users/sign_up
+GET  /api/lists/show_items/:phone
+POST /api/lists/add_item
+POST /api/lists/remove_item
+```
+The JSON structure of POST are in corresponding controllers.
 
 *Note that at this point, you won't get an SMS yet. The Flows are the entry points to receive / send SMS.*
 
 ### Setting up Twilio Studio Flow with your local Rails server
 * Get Twilio auth token and fill in `config/api_keys.yml`
 * Setup [ngrok](https://ngrok.com/) so Twilio can talk to your localhost via public internet
-* We need to import the Flow (coming soon!)
+* Inside `vendor/twilio/` directory, there are four JSON files. Inside these JSON files, replace all `yourapp.com` with ngrok's URL.
+* Go to Twilio Studio and follow the instructions [here](https://www.youtube.com/watch?v=pUiLcnF9YuM) to import the Flow.
+
+You're good to go!
 
 
 ## Deploying to AWS Elastic Beanstalk
-Everything is pre-configured to deploy to EBS. I wrestled a bit because EBS wasn't playing nice with Rails 6 dependencies, but you shouldn't have any issues deploying this repo directly to EBS. Please follow [instructions here](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/ruby-rails-tutorial.html) and a bunch of content [on the web](https://www.google.com/search?q=rails+6+elastic+beanstalk) about how to deploy. 
+Everything is pre-configured to deploy to EBS. I wrestled a bit because EBS wasn't playing nice with Rails 6 dependencies, but you shouldn't have any issues deploying this repo directly to EBS. Please follow [instructions here](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/ruby-rails-tutorial.html) and a bunch of content [on the web](https://www.google.com/search?q=rails+6+elastic+beanstalk) about how to deploy.
+
+EBS is nice because it provides health monitoring, auto-scaling, pre-configured security settings, and manages all the microservices in one place. However, Rails 6 is relatively new and I suspect the environment wasn't properly testing to deploy Rails 6 app out of the box. Either way, you have the option to deploy in container if you feel more comfortable.

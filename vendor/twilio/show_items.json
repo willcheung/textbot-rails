@@ -1,0 +1,133 @@
+{
+  "description": "Show items on list",
+  "states": [
+    {
+      "name": "Trigger",
+      "type": "InitialState",
+      "properties": {
+        "offset": {
+          "x": -450,
+          "y": 530
+        },
+        "flow_url": ""
+      },
+      "transitions": [
+        {
+          "event": "incomingMessage",
+          "conditions": [],
+          "next": null,
+          "uuid": "8092c3a6-8152-4e36-b80f-cb939dead8cc"
+        },
+        {
+          "event": "incomingCall",
+          "conditions": [],
+          "next": null,
+          "uuid": "00f0c633-1b22-41c9-85fc-7b4a6825bf6a"
+        },
+        {
+          "event": "incomingRequest",
+          "conditions": [],
+          "next": "FF0f65c430a89c740ee975f86e624dbd7d",
+          "uuid": "88ee210e-f51f-41c3-8eef-aabb8055c125"
+        }
+      ],
+      "sid": "FF4b83066a43413da9efc78615b496ed01"
+    },
+    {
+      "name": "list_show_items",
+      "type": "Webhook",
+      "properties": {
+        "offset": {
+          "x": -340,
+          "y": 810
+        },
+        "method": "GET",
+        "url": "https://yourapp.com/api/lists/show_items/{{flow.data.phone}}",
+        "body": null,
+        "timeout": null,
+        "parameters": null,
+        "save_response_as": null,
+        "content_type": "application/x-www-form-urlencoded;charset=utf-8"
+      },
+      "transitions": [
+        {
+          "event": "success",
+          "conditions": [],
+          "next": "FF9c2c2ec2c57e077f56245e28fb74ed47",
+          "uuid": "4722a12a-363d-4dce-b807-1341a4f281ac"
+        },
+        {
+          "event": "failed",
+          "conditions": [],
+          "next": "FFacfbc60eb9706525337edb26f21d44f9",
+          "uuid": "20b68e6f-db26-4f22-af51-282ef52c1067"
+        }
+      ],
+      "sid": "FF0f65c430a89c740ee975f86e624dbd7d"
+    },
+    {
+      "name": "list_not_found",
+      "type": "Message",
+      "properties": {
+        "offset": {
+          "x": -270,
+          "y": 1060
+        },
+        "body": "You don't have a list yet. To create a new list, text: \n\"add [item name]\"",
+        "from": "{{flow.channel.address}}",
+        "to": "{{contact.channel.address}}",
+        "media_url": null,
+        "service": "{{trigger.message.InstanceSid}}",
+        "channel": "{{trigger.message.ChannelSid}}",
+        "attributes": null
+      },
+      "transitions": [
+        {
+          "event": "sent",
+          "conditions": [],
+          "next": null,
+          "uuid": "e7f2fa25-1b3f-4941-854e-498258bb43fc"
+        },
+        {
+          "event": "failed",
+          "conditions": [],
+          "next": null,
+          "uuid": "690e9c4d-cafd-4530-9456-3d39c29a243a"
+        }
+      ],
+      "sid": "FFacfbc60eb9706525337edb26f21d44f9"
+    },
+    {
+      "name": "show_items",
+      "type": "Message",
+      "properties": {
+        "offset": {
+          "x": -590,
+          "y": 1060
+        },
+        "body": "Here's your list:\n{{widgets.list_show_items.parsed.list}}",
+        "from": "{{flow.channel.address}}",
+        "to": "{{contact.channel.address}}",
+        "media_url": null,
+        "service": "{{trigger.message.InstanceSid}}",
+        "channel": "{{trigger.message.ChannelSid}}",
+        "attributes": null
+      },
+      "transitions": [
+        {
+          "event": "sent",
+          "conditions": [],
+          "next": null,
+          "uuid": "a8915ad0-d8e9-4e16-8265-ea06d975d371"
+        },
+        {
+          "event": "failed",
+          "conditions": [],
+          "next": null,
+          "uuid": "ee702008-1dad-4fb1-a28c-4759d9f70e87"
+        }
+      ],
+      "sid": "FF9c2c2ec2c57e077f56245e28fb74ed47"
+    }
+  ]
+}

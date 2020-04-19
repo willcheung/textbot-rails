@@ -1,0 +1,133 @@
+{
+  "description": "Remove items from list",
+  "states": [
+    {
+      "name": "Trigger",
+      "type": "InitialState",
+      "properties": {
+        "offset": {
+          "x": -450,
+          "y": 530
+        },
+        "flow_url": ""
+      },
+      "transitions": [
+        {
+          "event": "incomingMessage",
+          "conditions": [],
+          "next": null,
+          "uuid": "7eb13651-6b6d-42e0-9e7a-b0f4aad32ab0"
+        },
+        {
+          "event": "incomingCall",
+          "conditions": [],
+          "next": null,
+          "uuid": "95656b32-db75-48ea-a57e-f6340f47cfa5"
+        },
+        {
+          "event": "incomingRequest",
+          "conditions": [],
+          "next": "FF0f65c430a89c740ee975f86e624dbd7d",
+          "uuid": "44c5a8ae-2a6b-4909-8d1d-3bbed4b31a4e"
+        }
+      ],
+      "sid": "FF4b83066a43413da9efc78615b496ed01"
+    },
+    {
+      "name": "list_remove_item",
+      "type": "Webhook",
+      "properties": {
+        "offset": {
+          "x": -340,
+          "y": 810
+        },
+        "method": "POST",
+        "url": "https://yourapp.com/api/lists/remove_item",
+        "body": "{\n        \"phone\": \"{{flow.data.phone}}\",\n        \"item\": \"{{flow.data.item}}\"\n}",
+        "timeout": null,
+        "parameters": null,
+        "save_response_as": null,
+        "content_type": "application/json;charset=utf-8"
+      },
+      "transitions": [
+        {
+          "event": "success",
+          "conditions": [],
+          "next": "FF9c2c2ec2c57e077f56245e28fb74ed47",
+          "uuid": "bbe31838-5ad1-4481-9c6f-a098a7dc525a"
+        },
+        {
+          "event": "failed",
+          "conditions": [],
+          "next": "FFacfbc60eb9706525337edb26f21d44f9",
+          "uuid": "26efef33-e91b-4aef-bf05-3833160a1ace"
+        }
+      ],
+      "sid": "FF0f65c430a89c740ee975f86e624dbd7d"
+    },
+    {
+      "name": "cannot_remove_item",
+      "type": "Message",
+      "properties": {
+        "offset": {
+          "x": -270,
+          "y": 1060
+        },
+        "body": "Doh, we can't remove this item! Please try again.",
+        "from": "{{flow.channel.address}}",
+        "to": "{{contact.channel.address}}",
+        "media_url": null,
+        "service": "{{trigger.message.InstanceSid}}",
+        "channel": "{{trigger.message.ChannelSid}}",
+        "attributes": null
+      },
+      "transitions": [
+        {
+          "event": "sent",
+          "conditions": [],
+          "next": null,
+          "uuid": "40ba7ed6-95d4-45be-99d0-2d64db26fcce"
+        },
+        {
+          "event": "failed",
+          "conditions": [],
+          "next": null,
+          "uuid": "284e1a3b-da55-4d96-9a71-d165fa4777f6"
+        }
+      ],
+      "sid": "FFacfbc60eb9706525337edb26f21d44f9"
+    },
+    {
+      "name": "show_new_list",
+      "type": "Message",
+      "properties": {
+        "offset": {
+          "x": -590,
+          "y": 1060
+        },
+        "body": "Removed! Your new list:\n{{widgets.list_remove_item.parsed.list}}",
+        "from": "{{flow.channel.address}}",
+        "to": "{{contact.channel.address}}",
+        "media_url": null,
+        "service": "{{trigger.message.InstanceSid}}",
+        "channel": "{{trigger.message.ChannelSid}}",
+        "attributes": null
+      },
+      "transitions": [
+        {
+          "event": "sent",
+          "conditions": [],
+          "next": null,
+          "uuid": "d704f326-33ae-4e20-b7bf-d6c323444360"
+        },
+        {
+          "event": "failed",
+          "conditions": [],
+          "next": null,
+          "uuid": "8534a716-cdd5-4a75-bbaf-cfbc13aaa57e"
+        }
+      ],
+      "sid": "FF9c2c2ec2c57e077f56245e28fb74ed47"
+    }
+  ]
+}

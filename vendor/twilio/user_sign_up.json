@@ -1,0 +1,345 @@
+{
+  "description": "Trigger & User Sign Up",
+  "states": [
+    {
+      "name": "Trigger",
+      "type": "InitialState",
+      "properties": {
+        "offset": {
+          "x": -450,
+          "y": 180
+        },
+        "flow_url": ""
+      },
+      "transitions": [
+        {
+          "event": "incomingMessage",
+          "conditions": [],
+          "next": "FF1481bce83d5edd141e4e766aabb729b1",
+          "uuid": "039da553-58d1-40d9-b3d8-c7ab5fa2ba2d"
+        },
+        {
+          "event": "incomingCall",
+          "conditions": [],
+          "next": null,
+          "uuid": "ef04cca1-a0d6-487e-920d-404606a1ec9d"
+        },
+        {
+          "event": "incomingRequest",
+          "conditions": [],
+          "next": null,
+          "uuid": "390f1933-f6b6-4790-b7c3-44900d69de47"
+        }
+      ],
+      "sid": "FF4b83066a43413da9efc78615b496ed01"
+    },
+    {
+      "name": "user_sign_up",
+      "type": "Webhook",
+      "properties": {
+        "offset": {
+          "x": -140,
+          "y": 1340
+        },
+        "method": "POST",
+        "url": "https://yourapp.com/api/users/sign_up",
+        "body": "{\n    \"user\": {\n        \"phone\": \"{{trigger.message.From}}\"\n    }\n}",
+        "timeout": null,
+        "parameters": null,
+        "save_response_as": null,
+        "content_type": "application/json;charset=utf-8"
+      },
+      "transitions": [
+        {
+          "event": "success",
+          "conditions": [],
+          "next": "FF97c05c01ab04b3b5a5d6b673a73f6d47",
+          "uuid": "713c0be6-3c28-4905-959a-ec812c0b030c"
+        },
+        {
+          "event": "failed",
+          "conditions": [],
+          "next": null,
+          "uuid": "b8f5e60d-8e92-4de0-90e0-21bb298d48f7"
+        }
+      ],
+      "sid": "FFcd994ba155995ba02fd43f9455134234"
+    },
+    {
+      "name": "user_update_name",
+      "type": "Webhook",
+      "properties": {
+        "offset": {
+          "x": -170,
+          "y": 1800
+        },
+        "method": "POST",
+        "url": "https://yourapp.com/api/users/update_name",
+        "body": "{\n    \"user\": {\n        \"phone\":  \"{{trigger.message.From}}\",\n        \"first_name\": \"{{widgets.ask_name.inbound.Body}}\"\n    }\n}",
+        "timeout": null,
+        "parameters": null,
+        "save_response_as": null,
+        "content_type": "application/json;charset=utf-8"
+      },
+      "transitions": [
+        {
+          "event": "success",
+          "conditions": [],
+          "next": "FFfff513371fbc4bf8eff21ff22977136f",
+          "uuid": "1fc96aa3-a1ef-4668-84fb-0f709aacabf7"
+        },
+        {
+          "event": "failed",
+          "conditions": [],
+          "next": null,
+          "uuid": "28616ece-4353-45bf-8789-35eb6b97b531"
+        }
+      ],
+      "sid": "FF74c6be5fac4f0d3f56d4ab6261bf3351"
+    },
+    {
+      "name": "ask_name",
+      "type": "MessagePrompt",
+      "properties": {
+        "offset": {
+          "x": -120,
+          "y": 1580
+        },
+        "body": "Hi there! I'm Textbot - your personal, well, textbot. What's your name?",
+        "from": "{{flow.channel.address}}",
+        "timeout": 1800,
+        "save_response_as": null,
+        "media_url": null,
+        "service": "{{trigger.message.InstanceSid}}",
+        "channel": "{{trigger.message.ChannelSid}}",
+        "attributes": null
+      },
+      "transitions": [
+        {
+          "event": "incomingMessage",
+          "conditions": [],
+          "next": "FF74c6be5fac4f0d3f56d4ab6261bf3351",
+          "uuid": "8b9ccb3e-b98e-4e83-8936-ece11be9dda8"
+        },
+        {
+          "event": "timeout",
+          "conditions": [],
+          "next": null,
+          "uuid": "1be7b236-a623-455f-b6b3-5a826f4ffe81"
+        },
+        {
+          "event": "deliveryFailure",
+          "conditions": [],
+          "next": null,
+          "uuid": "36785dfb-0ca4-42fb-bc19-d4d940b7da4e"
+        }
+      ],
+      "sid": "FF97c05c01ab04b3b5a5d6b673a73f6d47"
+    },
+    {
+      "name": "next_steps",
+      "type": "Message",
+      "properties": {
+        "offset": {
+          "x": -300,
+          "y": 2040
+        },
+        "body": "Great {{widgets.ask_name.inbound.Body}}! You can start a list by texting:\n\n- \"add [item name to list]\"\n- \"remove [item name or item number from list]\"\n- \"show items\"",
+        "from": "{{flow.channel.address}}",
+        "to": "{{contact.channel.address}}",
+        "media_url": null,
+        "service": "{{trigger.message.InstanceSid}}",
+        "channel": "{{trigger.message.ChannelSid}}",
+        "attributes": null
+      },
+      "transitions": [
+        {
+          "event": "sent",
+          "conditions": [],
+          "next": null,
+          "uuid": "3f262eee-84d1-401f-b68c-4b8113bead26"
+        },
+        {
+          "event": "failed",
+          "conditions": [],
+          "next": null,
+          "uuid": "83e6ed2c-3ffb-4eaf-bff6-a3c95d7a81f5"
+        }
+      ],
+      "sid": "FFfff513371fbc4bf8eff21ff22977136f"
+    },
+    {
+      "name": "split_to_sign_up",
+      "type": "Branch",
+      "properties": {
+        "offset": {
+          "x": -420,
+          "y": 620
+        },
+        "input": "{{trigger.message.Body}}"
+      },
+      "transitions": [
+        {
+          "event": "noMatch",
+          "conditions": [],
+          "next": "FF0c6a2e1ae7a6d385c5f8b3a102eee0f5",
+          "uuid": "447ea7c1-f12c-4bda-af87-56ceecc1bdda"
+        },
+        {
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value matches_any_of Hi, hi, HI, Hello, hello, HELLO",
+              "type": "matches_any_of",
+              "arguments": [
+                "{{trigger.message.Body}}"
+              ],
+              "value": "Hi, hi, HI, Hello, hello, HELLO"
+            }
+          ],
+          "next": "FFcd994ba155995ba02fd43f9455134234",
+          "uuid": "a4ebe618-b637-4469-88e0-69d301055ef0"
+        }
+      ],
+      "sid": "FFb720d2117d24c6f13bcc38ae2e973ba3"
+    },
+    {
+      "name": "trigger_mylist",
+      "type": "Webhook",
+      "properties": {
+        "offset": {
+          "x": -850,
+          "y": 630
+        },
+        "method": "POST",
+        "url": "https://yourapp.com/api/commands/trigger_mylist/{{trigger.message.From}}",
+        "body": "{\n   \"message\":\"{{trigger.message.Body}}\"\n}",
+        "timeout": null,
+        "parameters": null,
+        "save_response_as": null,
+        "content_type": "application/json;charset=utf-8"
+      },
+      "transitions": [
+        {
+          "event": "success",
+          "conditions": [],
+          "next": null,
+          "uuid": "a8f9f72c-1273-487f-b35d-93a654099b80"
+        },
+        {
+          "event": "failed",
+          "conditions": [],
+          "next": null,
+          "uuid": "b68e5ac7-4dcd-4270-b190-6ec93c76b90a"
+        }
+      ],
+      "sid": "FF58f22b4b3d7449059db07153d2f7c1fa"
+    },
+    {
+      "name": "check_user_exists",
+      "type": "Webhook",
+      "properties": {
+        "offset": {
+          "x": -520,
+          "y": 360
+        },
+        "method": "GET",
+        "url": "https://yourapp.com/api/users/retrieve/{{trigger.message.From}}",
+        "body": null,
+        "timeout": null,
+        "parameters": [],
+        "save_response_as": null,
+        "content_type": "application/x-www-form-urlencoded;charset=utf-8"
+      },
+      "transitions": [
+        {
+          "event": "success",
+          "conditions": [],
+          "next": "FF58f22b4b3d7449059db07153d2f7c1fa",
+          "uuid": "58ef091e-dbaa-456f-86d3-da3b3673ebf2"
+        },
+        {
+          "event": "failed",
+          "conditions": [],
+          "next": "FFb720d2117d24c6f13bcc38ae2e973ba3",
+          "uuid": "de685135-8f7c-4f8e-9378-6fb4e3ac1567"
+        }
+      ],
+      "sid": "FF1481bce83d5edd141e4e766aabb729b1"
+    },
+    {
+      "name": "prompt_to_sign_up",
+      "type": "MessagePrompt",
+      "properties": {
+        "offset": {
+          "x": -500,
+          "y": 850
+        },
+        "body": "Looks like you're not signed up yet. Text \"Y\" to get started!",
+        "from": "{{flow.channel.address}}",
+        "timeout": 300,
+        "save_response_as": null,
+        "media_url": null,
+        "service": "{{trigger.message.InstanceSid}}",
+        "channel": "{{trigger.message.ChannelSid}}",
+        "attributes": null
+      },
+      "transitions": [
+        {
+          "event": "incomingMessage",
+          "conditions": [],
+          "next": "FF070f1d17a35606cda94331ab96b8d821",
+          "uuid": "2fb434a5-9b1e-45db-9cff-237541135182"
+        },
+        {
+          "event": "timeout",
+          "conditions": [],
+          "next": null,
+          "uuid": "3c689d09-72c0-47bf-a4e9-7917b4b4ce86"
+        },
+        {
+          "event": "deliveryFailure",
+          "conditions": [],
+          "next": null,
+          "uuid": "424d5e57-9b09-4093-a6ea-1cd0c395dfb2"
+        }
+      ],
+      "sid": "FF0c6a2e1ae7a6d385c5f8b3a102eee0f5"
+    },
+    {
+      "name": "sign_up_split",
+      "type": "Branch",
+      "properties": {
+        "offset": {
+          "x": -820,
+          "y": 1120
+        },
+        "input": "{{widgets.prompt_to_sign_up.inbound.Body}}"
+      },
+      "transitions": [
+        {
+          "event": "noMatch",
+          "conditions": [],
+          "next": null,
+          "uuid": "1be53fcb-1bb6-451f-a1ff-32911a4d6804"
+        },
+        {
+          "event": "match",
+          "conditions": [
+            {
+              "friendly_name": "If value matches_any_of Y, y, Yes, yes, YES",
+              "type": "matches_any_of",
+              "arguments": [
+                "{{widgets.prompt_to_sign_up.inbound.Body}}"
+              ],
+              "value": "Y, y, Yes, yes, YES"
+            }
+          ],
+          "next": "FFcd994ba155995ba02fd43f9455134234",
+          "uuid": "207f43dd-ed21-495e-b62d-4449d4008427"
+        }
+      ],
+      "sid": "FF070f1d17a35606cda94331ab96b8d821"
+    }
+  ]
+}
