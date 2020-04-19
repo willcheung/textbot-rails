@@ -1,8 +1,8 @@
 # Textbot for managing to-do lists
 
-This is a simple textbot to help anyone manage a simple list, such as to-do, grocery, reminders, etc. The bot has two components: API/backend to manage requests, and [Twilio Studio Flow](https://www.twilio.com/docs/studio) to manage the user workflow.
+This is a simple textbot to help anyone manage a simple list, such as to-do, grocery, reminders, etc. This was built for a Twilio Hackathon, and you can read the [story behind it](https://dev.to/willcheung/twilio-hackathon-shared-to-do-grocery-lists-between-friends-family-and-businesses-343a). The bot has two components: API/backend to manage requests, and [Twilio Studio Flow](https://www.twilio.com/docs/studio) to manage the user workflow.
 
-![textbot-screenshot](https://res.cloudinary.com/practicaldev/image/fetch/s--rW-Nf-Dk--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/i/9nstfu9ci1c9701fke9k.png)
+![textbot-screenshot](https://res.cloudinary.com/practicaldev/image/fetch/s--rW-Nf-Dk--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/i/9nstfu9ci1c9701fke9k.png =700x)
 
 ## Live Demo
 Text "hi" to 616.344.5566
@@ -39,11 +39,11 @@ The JSON structure of POST endpoints are in corresponding controllers.
 * Setup [ngrok](https://ngrok.com/) so Twilio can talk to your localhost via public internet
 * Inside `vendor/twilio/` directory, there are four JSON files. Inside these JSON files, replace all `yourapp.com` with ngrok's URL.
 * Go to Twilio Studio and import the flow using those JSONs:
-![flow-import-screenshot](https://twilio-cms-prod.s3.amazonaws.com/images/newflowfromjson.width-1600.png)
+![flow-import-screenshot](https://twilio-cms-prod.s3.amazonaws.com/images/newflowfromjson.width-1600.png =500x)
 * After import, find your Flow SIDs on Studio dashboard, copy & paste the SIDs in file `/app/controllers/commands_controller.rb` where there's `FWxxxxxxxxxx-action-item`.
-![Studio Flow sids](https://dev-to-uploads.s3.amazonaws.com/i/izkczfb1nnx7xxm9bdyk.png)
+![Studio Flow sids](https://dev-to-uploads.s3.amazonaws.com/i/izkczfb1nnx7xxm9bdyk.png =500x)
 * Finally, configure the Triggers & Sign Up Flow with your Twilio phone #.
-![SMS Flow](https://dev-to-uploads.s3.amazonaws.com/i/yyn4ft6bme5znyk873jh.png)
+![SMS Flow](https://dev-to-uploads.s3.amazonaws.com/i/yyn4ft6bme5znyk873jh.png =500x)
 
 And you're good to go!
 
