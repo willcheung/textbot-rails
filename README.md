@@ -4,6 +4,9 @@ This is a simple textbot to help anyone manage a simple list, such as to-do, gro
 
 ![textbot-screenshot](https://res.cloudinary.com/practicaldev/image/fetch/s--rW-Nf-Dk--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/i/9nstfu9ci1c9701fke9k.png)
 
+## Live Demo
+Text "hi" to 616.344.5566
+
 ## Prerequisite
 * Ruby 2.6.5
 * Rails 6.0.2
@@ -27,7 +30,7 @@ GET  /api/lists/show_items/:phone
 POST /api/lists/add_item
 POST /api/lists/remove_item
 ```
-The JSON structure of POST are in corresponding controllers.
+The JSON structure of POST endpoints are in corresponding controllers.
 
 *Note that at this point, you won't get an SMS yet. The Flows are the entry points to receive / send SMS.*
 
@@ -35,9 +38,14 @@ The JSON structure of POST are in corresponding controllers.
 * Get Twilio auth token and fill in `config/api_keys.yml`
 * Setup [ngrok](https://ngrok.com/) so Twilio can talk to your localhost via public internet
 * Inside `vendor/twilio/` directory, there are four JSON files. Inside these JSON files, replace all `yourapp.com` with ngrok's URL.
-* Go to Twilio Studio and follow the instructions [here](https://www.youtube.com/watch?v=pUiLcnF9YuM) to import the Flow.
+* Go to Twilio Studio and import the flow using those JSONs:
+![flow-import-screenshot](https://twilio-cms-prod.s3.amazonaws.com/images/newflowfromjson.width-1600.png)
+* After import, find your Flow SIDs on Studio dashboard, copy & paste the SIDs in file `/app/controllers/commands_controller.rb` where there's `FWxxxxxxxxxx-action-item`.
+![Studio Flow sids](https://dev-to-uploads.s3.amazonaws.com/i/izkczfb1nnx7xxm9bdyk.png)
+* Finally, configure the Triggers & Sign Up Flow with your Twilio phone #.
+![SMS Flow](https://dev-to-uploads.s3.amazonaws.com/i/yyn4ft6bme5znyk873jh.png)
 
-You're good to go!
+And you're good to go!
 
 
 ## Deploying to AWS Elastic Beanstalk

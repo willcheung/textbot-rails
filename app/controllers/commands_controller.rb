@@ -30,7 +30,7 @@ class CommandsController < ApplicationController
 				logger.info "Calling Show Items Flow"
 				execution = client.studio
                    .v1
-                   .flows('FWxxxxxxxxxx')
+                   .flows('FWxxxxxxxxxx-show-items')
                    .executions
                    .create(parameters: {phone: params[:phone]}, to: params[:phone], from: ENV['TWILIO_PHONE_NUMBER'])
 			
@@ -40,7 +40,7 @@ class CommandsController < ApplicationController
 				logger.info "Calling Add Item Flow"
 				execution = client.studio
                    .v1
-                   .flows('FWxxxxxxxxxx')
+                   .flows('FWxxxxxxxxxx-add-item')
                    .executions
                    .create(parameters: {phone: params[:phone], item: item}, to: params[:phone], from: ENV['TWILIO_PHONE_NUMBER'])
 
@@ -50,7 +50,7 @@ class CommandsController < ApplicationController
 				logger.info "Calling Remove Item Flow"
 				execution = client.studio
                    .v1
-                   .flows('FWxxxxxxxxxx')
+                   .flows('FWxxxxxxxxxx-remove-item')
                    .executions
                    .create(parameters: {phone: params[:phone], item: item}, to: params[:phone], from: ENV['TWILIO_PHONE_NUMBER'])
 
