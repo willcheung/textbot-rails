@@ -2,7 +2,7 @@
 
 This is a simple textbot to help anyone manage a simple list, such as to-do, grocery, reminders, etc. This was built for a Twilio Hackathon, and you can read the [story behind it](https://dev.to/willcheung/twilio-hackathon-shared-to-do-grocery-lists-between-friends-family-and-businesses-343a). The bot has two components: API/backend to manage requests, and [Twilio Studio Flow](https://www.twilio.com/docs/studio) to manage the user workflow.
 
-<img src="https://res.cloudinary.com/practicaldev/image/fetch/s--rW-Nf-Dk--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/i/9nstfu9ci1c9701fke9k.png" alt="textbot-screenshot" width="700"/>
+<img src="https://res.cloudinary.com/practicaldev/image/fetch/s--rW-Nf-Dk--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/i/9nstfu9ci1c9701fke9k.png" alt="textbot-screenshot" width="600"/>
 
 ## Live Demo
 Text "hi" to 616.344.5566
@@ -32,7 +32,7 @@ POST /api/lists/remove_item
 ```
 The JSON structure of POST endpoints are in corresponding controllers.
 
-*Note that at this point, you won't get an SMS yet. The Flows are the entry points to receive / send SMS.*
+*Note that at this point, you won't get an SMS yet. The Flows handles most of receiving / sending SMS.*
 
 ### Setting up Twilio Studio Flow with your local Rails server
 * Get Twilio auth token and fill in `config/api_keys.yml`
