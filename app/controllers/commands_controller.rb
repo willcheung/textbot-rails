@@ -1,4 +1,8 @@
 class CommandsController < ApplicationController
+	# Define trigger keywords
+	SHOW_ITEMS_TRIGGER = "show items"
+	ADD_ITEM_TRIGGER = "add "
+	REMOVE_ITEM_TRIGGER = "remove "
 
 ##### List of commands #####
 # Show items
@@ -13,10 +17,6 @@ class CommandsController < ApplicationController
 	#    "message":"show items"
 	# }
 	def trigger_mylist
-		# Define trigger keywords
-		show_items_trigger = "show items"
-		add_item_trigger = "add "
-		remove_item_trigger = "remove "
 
 		client = Twilio::REST::Client.new
 		user = User.find_by_phone(params[:phone])
@@ -26,7 +26,7 @@ class CommandsController < ApplicationController
 		if user
 			# If user exsits, parse command
 			case
-			when command.starts_with?(show_items_trigger)
+			when command.starts_with?(SHOW_ITEMS_TRIGGER)
 				logger.info "Calling Show Items Flow"
 				execution = client.studio
                    .v1
@@ -34,8 +34,8 @@ class CommandsController < ApplicationController
                    .executions
                    .create(parameters: {phone: params[:phone]}, to: params[:phone], from: ENV['TWILIO_PHONE_NUMBER'])
 			
-			when command.starts_with?(add_item_trigger)
-				item = command.sub!(add_item_trigger, "")
+			when command.starts_with?(ADD_ITEM_TRIGGER)
+				item = command.sub!(ADD_ITEM_TRIGGER, "")
 
 				logger.info "Calling Add Item Flow"
 				execution = client.studio
@@ -44,8 +44,8 @@ class CommandsController < ApplicationController
                    .executions
                    .create(parameters: {phone: params[:phone], item: item}, to: params[:phone], from: ENV['TWILIO_PHONE_NUMBER'])
 
-      when command.starts_with?(remove_item_trigger)
-				item = command.sub!(remove_item_trigger, "")
+      when command.starts_with?(REMOVE_ITEM_TRIGGER)
+				item = command.sub!(REMOVE_ITEM_TRIGGER, "")
 
 				logger.info "Calling Remove Item Flow"
 				execution = client.studio
