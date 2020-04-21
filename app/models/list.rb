@@ -16,7 +16,7 @@ class List < ApplicationRecord
 	has_many :items
 	belongs_to :user, foreign_key: :owner_id
 
-	def update_seq_column
+	def update_items_seq
 		query = <<-SQL
 			UPDATE items
 			SET    seq = t.rn

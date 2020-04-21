@@ -78,7 +78,7 @@ class ListsController < ApplicationController
 		# Delete item and re-sequence list
 		if list.items.destroy(item)
 			# Update seq column
-			list.update_seq_column
+			list.update_items_seq
 
 			# Format list for display
 			output = format_list_output(user.lists.where(id: list.id).first)
