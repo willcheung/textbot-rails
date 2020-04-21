@@ -78,14 +78,7 @@ class ListsController < ApplicationController
 		# Delete item and re-sequence list
 		if list.items.destroy(item)
 			# Update seq column
-			query = <<-SQL
-				UPDATE items
-				SET    seq = t.rn
-				FROM  (select id, (row_number() over (partition by list_id order by seq)) rn from items) t
-				WHERE  items.id = t.id
-				AND list_id='#{list.id}';
-	  	SQL
-			ActiveRecord::Base.connection.execute(query)
+			list.update_seq_column
 
 			# Format list for display
 			output = format_list_output(user.lists.where(id: list.id).first)
