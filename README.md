@@ -31,9 +31,9 @@ POST /api/lists/add_item
 POST /api/lists/remove_item
 ```
 The JSON structure of `POST` endpoints are in corresponding controllers. An example from Postman:
-<img src="https://dev-to-uploads.s3.amazonaws.com/i/r3goztj0mkwyabzszlw7.png" alt="textbot-postman" width="500"/>
+<img src="https://dev-to-uploads.s3.amazonaws.com/i/qooeta6shr2kk79fek58.png" alt="textbot-postman" width="500"/>
 
-*Note 1: In screenshot, I'm using ngrok URL, described below.*
+*Note 1: In screenshot, note the `http://localhost:3000/api/lists/add_item` endpoint and JSON body for `POST`.*
 
 *Note 2: At this point, you won't get an SMS yet. The Studio Flows handles most of receiving / sending SMS.*
 
