@@ -14,7 +14,7 @@ class ListsController < ApplicationController
 		# Find list. Create List if it doesn't exist.
 		if user.lists.empty?
 			logger.info "List not found in 'add_item'!"
-			list = user.lists.new(name: "My List", short_name: "mylist" + params[:phone].last(4))
+			list = user.lists.new(name: "My List")
 			
 			if !list.save
 				render :status => 400, :json => {:message => list.errors.full_messages} and return

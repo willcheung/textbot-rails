@@ -6,7 +6,6 @@ class CreateLists < ActiveRecord::Migration[6.0]
     	t.text		:description
     	t.integer :limit
       t.boolean	:is_active, default: true
-      t.uuid		:organization_id
       t.uuid		:owner_id
 
       t.timestamps
