@@ -31,7 +31,7 @@ POST /api/lists/add_item
 POST /api/lists/remove_item
 ```
 The JSON structure of `POST` endpoints are in corresponding controllers. An example from Postman:
-<img src="https://dev-to-uploads.s3.amazonaws.com/i/r3goztj0mkwyabzszlw7.png" alt="textbot-postman width="500"/>
+<img src="https://dev-to-uploads.s3.amazonaws.com/i/r3goztj0mkwyabzszlw7.png" alt="textbot-postman" width="500"/>
 
 *Note 1: In screenshot, I'm using ngrok URL, described below.*
 
