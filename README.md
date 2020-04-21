@@ -31,8 +31,10 @@ POST /api/lists/add_item
 POST /api/lists/remove_item
 ```
 The JSON structure of `POST` endpoints are in corresponding controllers. An example from Postman:
-![textbot-postman](https://dev-to-uploads.s3.amazonaws.com/i/r3goztj0mkwyabzszlw7.png)
+<img src="https://dev-to-uploads.s3.amazonaws.com/i/r3goztj0mkwyabzszlw7.png" alt="textbot-postman width="500"/>
+
 *Note 1: In screenshot, I'm using ngrok URL, described below.*
+
 *Note 2: At this point, you won't get an SMS yet. The Studio Flows handles most of receiving / sending SMS.*
 
 ### Setting up Twilio Studio Flow with your local Rails server
