@@ -45,7 +45,7 @@ class ListsController < ApplicationController
 	end
 
 
-	#POST /api/lists/add_item/
+	#POST /api/lists/remove_item/
 	# {
 	#    "phone": "+16500008888",
 	#    "item": "My first item"

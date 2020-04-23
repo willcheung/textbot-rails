@@ -19,8 +19,14 @@ Text "hi" to 616.344.5566
 * annotate (for annotating database schema on model files)
 
 ## Setting up Rails app locally
-* Fill in `config/database.yml`
-* Do the usual `rails db:migrate` and `rails s` to get `http://localhost:3000` running
+* Fill in `config/database.yml` with your Postgres connection info
+* Run the migration, install bundle, and start server.
+```sh
+$ rake db:migrate
+$ bundle install
+$ rails server
+```
+* You're now up and running at `http://localhost:3000`!
 * You can test the API endpoints (without Twilio Studio Flow) via [Postman](https://www.postman.com/). The endpoints are:
 
 ```
@@ -30,7 +36,7 @@ GET  /api/lists/show_items/:phone
 POST /api/lists/add_item
 POST /api/lists/remove_item
 ```
-The JSON structure of `POST` endpoints are in corresponding controllers. An example from Postman:
+The JSON structure of `POST` endpoints are in corresponding controllers as comments. An example from Postman:
 <img src="https://dev-to-uploads.s3.amazonaws.com/i/qooeta6shr2kk79fek58.png" alt="textbot-postman" width="500"/>
 
 *Note 1: In screenshot, note the `http://localhost:3000/api/lists/add_item` endpoint and JSON body for `POST`.*
@@ -40,7 +46,7 @@ The JSON structure of `POST` endpoints are in corresponding controllers. An exam
 ### Setting up Twilio Studio Flow with your local Rails server
 * Get Twilio auth token and fill in `config/api_keys.yml`
 * Setup [ngrok](https://ngrok.com/) so Twilio can talk to your localhost via public internet
-* Inside `vendor/twilio/` directory, there are four JSON files. Inside these JSON files, replace all `yourapp.com` with ngrok's URL.
+* Inside `vendor/twilio/` directory, there are four JSON files. Inside these JSON files, replace all `http://yourapp.com` with your ngrok URL.
 * Go to Twilio Studio and import the flow using those JSONs. Twilio account identifiers are removed, but they're automatically filled in when you import from your Twilio account.
 <img src="https://twilio-cms-prod.s3.amazonaws.com/images/newflowfromjson.width-1600.png" alt="flow-import" width="500"/>
 
