@@ -10,7 +10,7 @@
     "css-loader": "^3.4.2",
     "sass-loader": "^8.0.2",
     "bootstrap": "^4.4.1",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "popper.js": "^1.16.0",
     "turbolinks": "^5.2.0",
     "webpack": "^4.2.2",
