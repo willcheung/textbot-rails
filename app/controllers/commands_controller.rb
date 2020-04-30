@@ -3,6 +3,7 @@ class CommandsController < ApplicationController
 	SHOW_ITEMS_TRIGGER = "show items"
 	ADD_ITEM_TRIGGER = "add "
 	REMOVE_ITEM_TRIGGER = "remove "
+	INVITE_TRIGGER = "invite"
 
 ##### List of commands #####
 # Show items
@@ -54,17 +55,18 @@ class CommandsController < ApplicationController
                    .executions
                    .create(parameters: {phone: params[:phone], item: item}, to: params[:phone], from: ENV['TWILIO_PHONE_NUMBER'])
 
+      when command.starts_with?(INVITE_TRIGGER)
+				message = "We don't want to spam, so we think it's best you send the invitation." + 
+					" Simply tap into Textbot contact and tap \"Share Contact\" to share the <3. They can text \"hi\" to get started! ☆ミ"
+				TwilioSms.new(message, media_url="https://textbot-public-assets.s3.us-east-2.amazonaws.com/Textbot.vcf").send(user.phone)
+
 			else
 				# Send generic message about valid commands. "Hi" becomes just a generic command
-				message = client.messages
-				  .create(
-				     body: "Welcome back #{user.first_name}! Things you can do:\n" + 
+				message = "Welcome back #{user.first_name}! Things you can do:\n" + 
 										"- add [item name to list]\n" +
 										"- remove [item name or item number]\n" +
-										"- show items",
-				     from: ENV['TWILIO_PHONE_NUMBER'],
-				     to: user.phone
-				   )
+										"- show items"
+				TwilioSms.new(message).send(user.phone)
 
 				logger.info "Unrecognized command #{command}. Sent a generic message."
 				render status: 400, json: {message: "Unrecognized command. Sent a generic message."} and return

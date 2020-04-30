@@ -2,6 +2,12 @@
 
 This is a simple textbot to help anyone manage a simple list, such as to-do, grocery, reminders, etc. This was built for a Twilio Hackathon, and you can read the [story behind it](https://dev.to/willcheung/twilio-hackathon-shared-to-do-grocery-lists-between-friends-family-and-businesses-343a). The bot has two components: API/backend to manage requests, and [Twilio Studio Flow](https://www.twilio.com/docs/studio) to manage the user workflow.
 
+The bot does basic to-do list operations:
+* add item
+* remove item
+* show items
+* invite others
+
 <img src="https://res.cloudinary.com/practicaldev/image/fetch/s--rW-Nf-Dk--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/i/9nstfu9ci1c9701fke9k.png" alt="textbot-screenshot" width="600"/>
 
 ## Live Demo
@@ -58,6 +64,26 @@ The JSON structure of `POST` endpoints are in corresponding controllers as comme
 
 And you're good to go! Text "hi" to your Twilio phone # and watch your ngrok / Rails console.
 
+### (Optional) Customize your own "vcard" for sharing
+In this app, I utilized MMS and [vcard](https://en.wikipedia.org/wiki/VCard) for sharing my textbot as a Contact. If you look at `command_controller.rb`, you'll notice the `media_url` is hardcoded to a `Textbot.vcf` URL. It's pretty much text file in a .vcf format - feel free to download it and play with it. You can also create your own [here](https://www.vcard.link/card).
+
+The most important thing about this setup is making sure the `content-type` is `text/x-vcard`. If it's something else, Twilio will reject the MMS.
+
+```
+curl -I -X GET https://textbot-public-assets.s3.us-east-2.amazonaws.com/Textbot.vcf
+
+x-amz-id-2: dSwEV34NI0QAKglHuy5HeAjiN0h2nTdhRizcx+wVsF0M8npUokqc0pV3qO8tSMQ5Pe6TSMRCeVk=
+x-amz-request-id: 94C28B35A6B68D1A
+Date: Thu, 30 Apr 2020 06:55:16 GMT
+Last-Modified: Thu, 30 Apr 2020 03:17:33 GMT
+ETag: "fb2d90212b105da5becb849d33fd6aa2"
+Cache-Control: max-age=0, must-revalidate, private
+Content-Disposition: attachment; filename="Textbot.vcf"
+Accept-Ranges: bytes
+Content-Type: text/x-vcard; charset=utf-8
+Content-Length: 218
+Server: AmazonS3
+```
 
 ## Deploying to AWS Elastic Beanstalk
 Everything is pre-configured to deploy to EBS. I wrestled a bit because EBS wasn't playing nice with Rails 6 dependencies, but you shouldn't have any issues deploying this repo directly to EBS. Please follow [instructions here](https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/ruby-rails-tutorial.html) and a bunch of content [on the web](https://www.google.com/search?q=rails+6+elastic+beanstalk) about how to deploy.
